@@ -492,7 +492,8 @@ li:last-child {
   }
 
   .mobile-title {
-    font-size: 18px;
+    font-family: "Ting Tong", sans-serif;
+    font-size: 20px;
     font-weight: 600;
     color: white;
   }
