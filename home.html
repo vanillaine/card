@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanillaine</title>
+    <script
+      src="https://kit.fontawesome.com/def28874ea.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav class="sidebar">
+      <div class="sidebar-title">Pages</div>
+      <button
+        class="nav-btn active"
+        id="btn-homepage"
+        onclick="openTab('homepage')"
+      >
+        <i class="fa-solid fa-user"></i> Homepage
+      </button>
+      <button class="nav-btn" id="btn-anime" onclick="openTab('anime')">
+        <i class="fa-solid fa-window-restore"></i> Anime & Manga
+      </button>
+      <button class="nav-btn" id="btn-films" onclick="openTab('films')">
+        <i class="fa-solid fa-folder"></i> Films & Books
+      </button>
+      <button class="nav-btn" id="btn-games" onclick="openTab('games')">
+        <i class="fa-solid fa-gamepad"></i> Games
+      </button>
+      <button class="nav-btn" id="btn-idols" onclick="openTab('idols')">
+        <i class="fa-solid fa-star"></i> Idols
+      </button>
+
+      <div class="sidebar-title" style="margin-top: 30px">Socials</div>
+      <a
+        href="https://twitter.com/vanillaine"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <i class="fa-brands fa-twitter" style="color: var(--text-muted)"></i>
+        Twitter
+      </a>
+      <a
+        href="https://www.instagram.com/vanillaine_/"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <i class="fa-brands fa-instagram" style="color: var(--text-muted)"></i>
+        Instagram
+      </a>
+      <a
+        href="https://open.spotify.com/user/21ykifkrlasdp4bpdojpucpda?si=c3aa787ac92b49f2"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <i class="fa-brands fa-spotify" style="color: var(--text-muted)"></i>
+        Spotify
+      </a>
+      <a
+        href="https://letterboxd.com/Vanillaine/"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <i class="fa-brands fa-letterboxd" style="color: var(--text-muted)"></i>
+        Letterboxd
+      </a>
+      <a
+        href="https://myanimelist.net/profile/vanillaine"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <img
+          src="https://cdn.simpleicons.org/myanimelist/9ca3af"
+          alt="MAL"
+          style="width: 20px; height: 20px; object-fit: contain"
+        />
+        MyAnimeList
+      </a>
+      <a
+        href="https://mydramalist.com/profile/Jutrzenkaaa"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <img
+          src="/assets/mydramalist bg removed.png"
+          alt="MDL"
+          style="
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(80%);
+          "
+        />
+        MyDramaList
+      </a>
+      <a
+        href="https://backloggd.com/u/vanillaine"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <img
+          src="/assets/backloggd bg removed.png"
+          alt="Backloggd"
+          style="
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(80%);
+          "
+        />
+        Backloggd
+      </a>
+      <a
+        href="https://steamcommunity.com/id/vanillaine/"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <i
+          class="fa-brands fa-steam-symbol"
+          style="color: var(--text-muted)"
+        ></i>
+        Steam
+      </a>
+      <a
+        href="https://psnprofiles.com/Vanillaine"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <i
+          class="fa-brands fa-playstation"
+          style="color: var(--text-muted)"
+        ></i>
+        Playstation
+      </a>
+      <a
+        href="https://overwatch.blizzard.com/en-us/career/d04ca38cbf7e8dbee2e972bdd509a30e%7C19aadd5741b768317af03812fe8c8511/"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <img
+          src="https://cdn2.steamgriddb.com/icon_thumb/0cf7b480289c0c4b07b6d3bd72fef0c9.png"
+          alt="Overwatch"
+          style="
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(50%);
+          "
+        />
+        Overwatch
+      </a>
+      <a
+        href="https://archiveofourown.org/users/moltofreaky"
+        target="_blank"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <img
+          src="https://cdn.simpleicons.org/archiveofourown/9ca3af"
+          alt="AO3"
+          style="width: 20px; height: 20px; object-fit: contain"
+        />
+        Archive of Our Own
+      </a>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-inner">
+        <!-- HOMEPAGE -->
+
+        <section id="homepage" class="tab-content" style="display: block">
+          <div class="profile-header">
+            <img
+              src="https://pbs.twimg.com/profile_images/2025989555644690432/SZy3snum_400x400.jpg"
+              alt="Profile"
+              class="profile-img"
+            />
+            <div>
+              <h1 class="profile-name">Haseulbintaro</h1>
+              <p style="margin: 0"><span class="username">@vanillaine</span></p>
+            </div>
+          </div>
+
+          <div class="badges-container">
+            <div><span class="badge">age</span> 24</div>
+            <div><span class="badge">pronouns</span> any</div>
+            <div><span class="badge">MBTI</span> INFP-T</div>
+            <div><span class="badge">language</span> ENG/ID</div>
+          </div>
+
+          <p>
+            <span class="badge">introduction</span> Goes by
+            <span class="text-blue font-bold">Jen</span>. Just a generic person
+            who craves for more media to be a fan of then logging them in their
+            respective logging apps. I used to be very active on various
+            fandoms, but I lost the spirit because of how toxic & hostile most
+            of them are. However, I still talk about them casually.
+          </p>
+          <p>
+            <span class="badge">seasonals</span> Since I have various hobbies, I
+            talk about each of them highly depending on my mood and current
+            hyperfixations. So, don't expect to see me tweet about your faves at
+            all times when you initially found my tweet regarding your faves (I
+            refuse to make & manage dedicated accounts for each of them).
+          </p>
+          <div class="list-section">
+            <p style="margin-bottom: 10px"><span class="badge">byf</span></p>
+            <ul class="pointer-list">
+              <li>
+                This a
+                <span class="text-blue font-bold">personal account</span> so
+                there are lots of personal IRL tweets, especially in bahasa
+                indonesia.
+              </li>
+              <li>
+                I'm pretty opinionated on certain things so I might actually
+                shade on something but as long as it's not on my dni list, I
+                don't really care if you like them (you do you).
+              </li>
+              <li>
+                I also don't interact that much either... I'm an anxious person,
+                and am awkward & dry af in the dm so... sorry.
+              </li>
+            </ul>
+          </div>
+
+          <div class="list-section">
+            <p style="margin-bottom: 10px"><span class="badge">dni</span></p>
+            <ul class="pointer-list">
+              <li>Queerphobic, islamophobic, sexist, racist, ableist.</li>
+              <li>Can't comprehend the concept of nuance.</li>
+              <li>Unnecessarily rude/hostile.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ANIME & MANGA -->
+
+        <section id="anime" class="tab-content">
+          <h1 class="section-name" style="margin-bottom: 20px">
+            Anime & Manga
+          </h1>
+          <div class="media-category anime-category">
+            <p>
+              <span class="badge">ani-manga</span>Been a weeb since I could
+              remember. I'm more of a manga reader. I used to watch lots of
+              seasonal anime but not so much anymore. My taste might look like
+              some pretentious edgy weeb, but hey I just watch things that I
+              like. Go check out my
+              <a
+                class="text-blue font-bold font-underline"
+                href="https://myanimelist.net/profile/vanillaine"
+                target="_blank"
+                >MyAnimeList</a
+              >!
+            </p>
+            <h2>Anime</h2>
+            <div class="poster-gallery anime-posters">
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/1417/112991l.jpg"
+                  alt="5cms"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Movie • 2007</span>
+                  <span class="poster-bottom">5 Centimeters per Second</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/1576/132154l.jpg"
+                  alt="Blue Giant"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Movie • 2023</span>
+                  <span class="poster-bottom">Blue Giant</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/1071/150946l.jpg"
+                  alt="GITS"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">TV • 2001</span>
+                  <span class="poster-bottom">Ghost in the Shell</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/1167/145092l.jpg"
+                  alt="Evangelion"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">TV • 1995</span>
+                  <span class="poster-bottom">Neon Genesis Evangelion</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/1509/117149l.jpg"
+                  alt="Sonny Boy"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">TV • 2021</span>
+                  <span class="poster-bottom">Sonny Boy</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/8/50559l.jpg"
+                  alt="Aku no Hana"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">TV • 2013</span>
+                  <span class="poster-bottom">Aku no Hana</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/5/77183l.jpg"
+                  alt="Ping Pong"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">TV • 2014</span>
+                  <span class="poster-bottom">Ping Pong the Animation</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/1155/111177l.jpg"
+                  alt="Odd Taxi"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">TV • 2021</span>
+                  <span class="poster-bottom">Odd Taxi</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/anime/1440/126964l.jpg"
+                  alt="Utena"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">TV • 1997</span>
+                  <span class="poster-bottom">Revolutionary Girl Utena</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr style="border: 1px solid #3f3f46; margin: 30px 0" />
+
+          <h2>Manga</h2>
+          <div class="media-category manga-category">
+            <div class="poster-gallery manga-posters">
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/1/115443l.jpg"
+                  alt="HNK"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 2012</span>
+                  <span class="poster-bottom">Houseki no Kuni</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/1/157897l.jpg"
+                  alt="Berserk"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 1989</span>
+                  <span class="poster-bottom">Berserk</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/4/236180l.jpg"
+                  alt="Slam Dunk"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 1990</span>
+                  <span class="poster-bottom">Slam Dunk</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/2/188925l.jpg"
+                  alt="Vinland Saga"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 2005</span>
+                  <span class="poster-bottom">Vinland Saga</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/3/149257l.jpg"
+                  alt="Golden Kamuy"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 2014</span>
+                  <span class="poster-bottom">Golden Kamuy</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/3/168953l.jpg"
+                  alt="Bokutachi Ga Yarimashita"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 2015</span>
+                  <span class="poster-bottom">Bokutachi Ga Yarimashita</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/3/263979l.jpg"
+                  alt="Sayonara Eri"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 2022</span>
+                  <span class="poster-bottom">Sayonara Eri</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/4/271016l.jpg"
+                  alt="BLAME"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 1997</span>
+                  <span class="poster-bottom">BLAME!</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/3/164420l.jpg"
+                  alt="Oyasumi Punpun"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 2007</span>
+                  <span class="poster-bottom">Oyasumi Punpun</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://myanimelist.net/images/manga/1/267772l.jpg"
+                  alt="The Bugle Call"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Manga • 2022</span>
+                  <span class="poster-bottom">The Bugle Call: Song of War</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FILMS & BOOKS -->
+
+        <section id="films" class="tab-content">
+          <h1 class="section-name" style="margin-bottom: 20px">
+            Films & Books
+          </h1>
+          <div class="media-category films-category">
+            <p>
+              <span class="badge">films</span>Started
+              <span class="text-blue font-bold font-italic"
+                >really actually</span
+              >
+              watching films in 2020. Honestly kinda burnt out of films as of
+              late. Go check out my
+              <a
+                class="text-blue font-bold font-underline"
+                href="https://letterboxd.com/Vanillaine/"
+                target="_blank"
+                >Letterboxd</a
+              >!
+            </p>
+            <div class="poster-gallery films-posters large-gallery">
+              <div class="poster-item">
+                <img
+                  src="https://a.ltrbxd.com/resized/film-poster/4/6/0/8/3/0/460830-portrait-of-a-lady-on-fire-0-1000-0-1500-crop.jpg?v=79b0f67aa9"
+                  alt="POALOF"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Céline Sciamma • 2019</span>
+                  <span class="poster-bottom">Portrait of a Lady on Fire</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://a.ltrbxd.com/resized/film-poster/2/4/0/3/4/4/240344-la-la-land-0-1000-0-1500-crop.jpg?v=053670ff84"
+                  alt="La La Land"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Damien Chazelle • 2016</span>
+                  <span class="poster-bottom">La La Land</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://a.ltrbxd.com/resized/film-poster/2/6/4/0/0/26400-5-centimeters-per-second-0-1000-0-1500-crop.jpg?v=388422321f"
+                  alt="5cms"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Makoto Shinkai • 2007</span>
+                  <span class="poster-bottom">5 Centimeters per Second</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://a.ltrbxd.com/resized/film-poster/6/7/9/2/9/1/679291-drive-my-car-0-1000-0-1500-crop.jpg?v=9e1f7c9f35"
+                  alt="Drive My Car"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Ryusuke Hamaguchi • 2021</span>
+                  <span class="poster-bottom">Drive My Car</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="media-category books-category">
+            <p>
+              <span class="badge">books</span>Started reading actual
+              books/novels in 2025, so my reads are still a tad bit few. I don't
+              have a social book logging app because I'm using Bookmory.
+            </p>
+            <div class="poster-gallery books-posters large-gallery">
+              <div class="poster-item">
+                <img
+                  src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1644426283i/56927764.jpg"
+                  alt="Heaven"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Mieko Kawakami • 2009</span>
+                  <span class="poster-bottom">Heaven</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/product-metas/nxx5n1rata.jpg"
+                  alt="Madonna"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">Sabahattin Ali • 1943</span>
+                  <span class="poster-bottom">Madonna in a Fur Coat</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/products/n-a-a9nv8-.jpg"
+                  alt="Animal Farm"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">George Orwell • 1945</span>
+                  <span class="poster-bottom">Animal Farm</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GAMES -->
+
+        <section id="games" class="tab-content">
+          <h1 class="section-name" style="margin-bottom: 20px">Games</h1>
+
+          <div class="media-category games-category">
+            <p>
+              <span class="badge">games</span>Been a PC gamer my whole life too.
+              I'm more of a single player games gamer, but I do occasionally
+              still play Overwatch. Currently playing on homebrewed 3DS from
+              time to time and a PS4 Pro. My PC died in 2020 but now I'm finally
+              getting back into PC gaming in 2025 since I got a gaming laptop.
+              Go check out my
+              <a
+                class="text-blue font-bold font-underline"
+                href="https://backloggd.com/u/vanillaine"
+                target="_blank"
+                >Backloggd</a
+              >!
+            </p>
+            <div class="poster-gallery games-posters large-gallery">
+              <div class="poster-item">
+                <img
+                  src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co670h.jpg"
+                  alt="BG3"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">2023</span>
+                  <span class="poster-bottom">Baldur's Gate 3</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co9gam.jpg"
+                  alt="E33"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">2025</span>
+                  <span class="poster-bottom">Clair Obscur: Expedition 33</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co2n12.jpg"
+                  alt="Bioshock Infinite"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">2013</span>
+                  <span class="poster-bottom">Bioshock Infinite</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaih8.jpg"
+                  alt="CP2077"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">2020</span>
+                  <span class="poster-bottom">Cyberpunk 2077</span>
+                </div>
+              </div>
+              <div class="poster-item">
+                <img
+                  src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co2unc.jpg"
+                  alt="FFIX"
+                />
+                <div class="poster-overlay">
+                  <span class="poster-top">2000</span>
+                  <span class="poster-bottom">Final Fantasy IX</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- IDOLS -->
+
+        <section id="idols" class="tab-content">
+          <h1 class="section-name" style="margin-bottom: 20px">Idols</h1>
+          <div class="media-category jpop-category">
+            <p>
+              <span class="badge">j-pop</span>I used to be a
+              <span class="text-blue font-bold">JKT48</span> &
+              <span class="text-blue font-bold">AKB48</span> wota since 2013,
+              but now just casually. In 2020 I found out about Sakamichi series
+              and has been a wota of them ever since, mostly
+              <span class="text-blue font-bold">Nogizaka46</span>. I also watch
+              sakamichi variety shows religiously.
+            </p>
+            <div class="poster-gallery jpop-posters large-gallery">
+              <div class="poster-item idol-item">
+                <img
+                  class="idol-photo"
+                  src="https://pbs.twimg.com/media/FyZiyTOacAECbuZ?format=jpg&name=large"
+                  alt="Saito Asuka"
+                />
+                <div class="idol-logo-wrapper">
+                  <img
+                    class="idol-logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/92/Nogizaka46_logo.png"
+                    alt="Nogizaka46"
+                  />
+                </div>
+                <div class="poster-overlay">
+                  <span class="poster-top">Nogizaka46</span>
+                  <span class="poster-bottom">Saito Asuka</span>
+                </div>
+              </div>
+              <div class="poster-item idol-item">
+                <img
+                  class="idol-photo"
+                  src="https://pbs.twimg.com/media/GRKIcPaa8AAtVlc?format=jpg&name=medium"
+                  alt="Sasaki Kumi"
+                />
+                <div class="idol-logo-wrapper">
+                  <img
+                    class="idol-logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Hinatazaka46_logomark_2021.svg/500px-Hinatazaka46_logomark_2021.svg.png"
+                    alt="Hinatazaka46"
+                  />
+                </div>
+                <div class="poster-overlay">
+                  <span class="poster-top">Hinatazaka46</span>
+                  <span class="poster-bottom">Sasaki Kumi</span>
+                </div>
+              </div>
+              <div class="poster-item idol-item">
+                <img
+                  class="idol-photo"
+                  src="https://pbs.twimg.com/media/HEZ5LiAbkAEXhKf?format=jpg&name=medium"
+                  alt="Morita Hikaru"
+                />
+                <div class="idol-logo-wrapper">
+                  <img
+                    class="idol-logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Sakurazaka46_logo.svg/500px-Sakurazaka46_logo.svg.png"
+                    alt="Sakurazaka46"
+                  />
+                </div>
+                <div class="poster-overlay">
+                  <span class="poster-top">Sakurazaka46</span>
+                  <span class="poster-bottom">Morita Hikaru</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="media-category kpop-category">
+            <p>
+              <span class="badge">k-pop</span>Weirdly enough
+              <span class="text-blue font-bold">MAMAMOO</span> was the group
+              that got me into k-pop in 2016. Finally settled with
+              <span class="text-blue font-bold">LOONA</span>-derivatives,
+              <span class="text-blue font-bold">Hearts2Hearts</span>,
+              <span class="text-blue font-bold">Billlie</span>, and
+              <span class="text-blue font-bold">NMIXX</span> (while the rest are
+              more casual).
+            </p>
+            <div class="poster-gallery kpop-posters large-gallery">
+              <div class="poster-item idol-item">
+                <video class="idol-photo" autoplay muted loop playsinline>
+                  <source
+                    src="/assets/ARTMS Objekt Ever01 501z Haseul.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+                <div class="idol-logo-wrapper">
+                  <img
+                    class="idol-logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/3/3f/LOONA_Logo.jpg"
+                    alt="LOONA"
+                  />
+                </div>
+                <div class="poster-overlay">
+                  <span class="poster-top">LOONA / ARTMS</span>
+                  <span class="poster-bottom">Haseul</span>
+                </div>
+              </div>
+              <div class="poster-item idol-item">
+                <img
+                  class="idol-photo"
+                  src="https://pub-dc9a9c6ac2a64ba48bce426ced0ac56a.r2.dev/idols/Yuha/profile.jpg?v=1775116681737"
+                  alt="Yuha"
+                />
+                <div class="idol-logo-wrapper">
+                  <img
+                    class="idol-logo"
+                    src="https://i.pinimg.com/originals/9f/79/4a/9f794aa34348d15f8a07e99006275b03.png"
+                    alt="Hearts2Hearts"
+                  />
+                </div>
+                <div class="poster-overlay">
+                  <span class="poster-top">Hearts2Hearts</span>
+                  <span class="poster-bottom">Yuha</span>
+                </div>
+              </div>
+              <div class="poster-item idol-item">
+                <img
+                  class="idol-photo"
+                  src="https://pbs.twimg.com/media/G_Mj19XbcAATv3V?format=jpg&name=4096x4096"
+                  alt="Moon Sua"
+                />
+                <div class="idol-logo-wrapper">
+                  <img
+                    class="idol-logo"
+                    src="https://www.daebak.de/media/e6/8d/9a/1732157720/billlie_logo.png?ts=1746136561"
+                    alt="Billlie"
+                  />
+                </div>
+                <div class="poster-overlay">
+                  <span class="poster-top">Billlie</span>
+                  <span class="poster-bottom">Moon Sua</span>
+                </div>
+              </div>
+              <div class="poster-item idol-item">
+                <img
+                  class="idol-photo"
+                  src="https://pbs.twimg.com/media/G13GLzib0AIfnVA?format=jpg&name=4096x4096"
+                  alt="Haewon"
+                />
+                <div class="idol-logo-wrapper">
+                  <img
+                    class="idol-logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/NMIXX_logo.svg/960px-NMIXX_logo.svg.png?_=20250401074026"
+                    alt="NMIXX"
+                  />
+                </div>
+                <div class="poster-overlay">
+                  <span class="poster-top">NMIXX</span>
+                  <span class="poster-bottom">Haewon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <aside class="status-sidebar">
+      <div class="status-card">
+        <h3><i class="fa-solid fa-gamepad"></i> Currently Playing</h3>
+        <div class="status-game">
+          <img
+            src="https://cdn2.steamgriddb.com/icon_thumb/0cf7b480289c0c4b07b6d3bd72fef0c9.png"
+            alt="Game Cover"
+          />
+          <div class="status-info">
+            <span class="status-title">Overwatch</span>
+            <span class="status-desc">Platinum 4 - Support</span>
+          </div>
+        </div>
+        <div class="status-game">
+          <img
+            src="https://cdn2.steamgriddb.com/icon_thumb/860052df4915de4d6c3deac9f7ebf5cc.png"
+            alt="Game Cover"
+          />
+          <div class="status-info">
+            <span class="status-title">Digimon Story Cyber Sleuth</span>
+          </div>
+        </div>
+        <div class="status-game">
+          <img
+            src="https://cdn2.steamgriddb.com/icon/19cba97c59c6ddc49816b65a9cdddd6d/32/256x256.png"
+            alt="Game Cover"
+          />
+          <div class="status-info">
+            <span class="status-title">Umamusume Pretty Derby</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-card">
+        <h3><i class="fa-solid fa-tv"></i> Currently Watching</h3>
+        <div class="status-poster">
+          <img
+            src="https://pbs.twimg.com/media/HEhVpXjagAABfQr?format=jpg&name=medium"
+            alt="Anime Cover"
+          />
+          <div class="status-info">
+            <span class="status-title">Steel Ball Run</span>
+            <span class="status-desc">Where tf is Eps 2</span>
+          </div>
+        </div>
+        <div class="status-poster">
+          <img src="https://i.mydramalist.com/ZgXVWf.jpg" alt="Series Cover" />
+          <div class="status-info">
+            <span class="status-title">Nogizaka Under Construction</span>
+            <span class="status-desc">Episode 508</span>
+            <span class="status-desc">YT pls upload more ENG sub</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-card">
+        <h3><i class="fa-solid fa-book-open"></i> Currently Reading</h3>
+        <div class="status-poster">
+          <img
+            src="https://myanimelist.net/images/manga/1/267772l.jpg"
+            alt="Manga Cover"
+          />
+          <div class="status-info">
+            <span class="status-title">The Bugle Call: Song of War</span>
+            <span class="status-desc">Chapter 30</span>
+          </div>
+        </div>
+        <div class="status-poster">
+          <img
+            src="https://image.gramedia.net/rs:fit:0:0/plain/https://cdn.gramedia.com/uploads/product-metas/-h-heh3hgi.jpg"
+            alt="Book Cover"
+          />
+          <div class="status-info">
+            <span class="status-title">All the Lovers in the Night</span>
+            <span class="status-desc">Mieko Kawakami</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <script>
+      function openTab(tabId) {
+        const sections = document.querySelectorAll(".tab-content");
+        sections.forEach((sec) => {
+          sec.style.display = "none";
+        });
+
+        document.getElementById(tabId).style.display = "block";
+
+        const buttons = document.querySelectorAll(".nav-btn");
+        buttons.forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        const activeBtn = document.getElementById("btn-" + tabId);
+        if (activeBtn) {
+          activeBtn.classList.add("active");
+        }
+      }
+    </script>
+  </body>
+</html>
