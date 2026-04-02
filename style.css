@@ -14,6 +14,11 @@
   --bg-hover: #374151;
 }
 
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 /* =========================================
    CUSTOM FONTS
    ========================================= */
@@ -633,7 +638,7 @@ html::-webkit-scrollbar,
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 60vh;
+    height: 60dvh;
     background-color: var(--bg-sidebar);
     border-left: none;
     border-top: 1px solid var(--border-color);

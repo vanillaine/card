@@ -1085,6 +1085,13 @@
         if (sidebar.classList.contains("active")) {
           sidebar.classList.remove("active");
         }
+
+        window.scrollTo({ top: 0, behavior: "instant" });
+
+        const mainContent = document.querySelector(".main-content");
+        if (mainContent) {
+          mainContent.scrollTop = 0;
+        }
       }
 
       function toggleSidebar() {
