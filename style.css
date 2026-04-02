@@ -294,10 +294,6 @@ li:last-child {
   padding: 15px 5px;
 }
 
-.poster-gallery.large-gallery {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-
 .poster-item {
   position: relative;
   width: 115px;
@@ -438,4 +434,20 @@ li:last-child {
 
 .tab-content {
   display: none;
+}
+
+.media-category {
+  margin-bottom: 40px;
+}
+
+.media-category h2 {
+  font-size: 28px;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.poster-gallery.large-gallery {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
