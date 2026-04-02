@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanillaine</title>
+    <link rel="icon" type="svg" href="assets/loonaColors.svg" />
     <script
       src="https://kit.fontawesome.com/def28874ea.js"
       crossorigin="anonymous"
@@ -938,20 +939,35 @@
       }
 
       const bottomSheet = document.querySelector(".status-sidebar");
-      let startY;
+      const sheetHandle = document.querySelector(".bottom-sheet-handle");
+      let handleStartY;
+      let sheetStartY;
+
+      sheetHandle.addEventListener("touchstart", (e) => {
+        handleStartY = e.touches[0].clientY;
+      });
+
+      sheetHandle.addEventListener("touchend", (e) => {
+        let handleEndY = e.changedTouches[0].clientY;
+
+        if (handleStartY - handleEndY > 40) {
+          bottomSheet.classList.add("active");
+        } else if (handleEndY - handleStartY > 40) {
+          bottomSheet.classList.remove("active");
+        }
+      });
 
       bottomSheet.addEventListener("touchstart", (e) => {
-        startY = e.touches[0].clientY;
+        if (e.target.closest(".bottom-sheet-handle")) return;
+        sheetStartY = e.touches[0].clientY;
       });
 
       bottomSheet.addEventListener("touchend", (e) => {
-        let endY = e.changedTouches[0].clientY;
+        if (e.target.closest(".bottom-sheet-handle")) return;
+        let sheetEndY = e.changedTouches[0].clientY;
 
-        if (startY - endY > 50) {
-          bottomSheet.classList.add("active");
-        } else if (endY - startY > 50) {
+        if (sheetEndY - sheetStartY > 50 && bottomSheet.scrollTop <= 0) {
           bottomSheet.classList.remove("active");
-          bottomSheet.scrollTop = 0;
         }
       });
     </script>
