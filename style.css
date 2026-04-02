@@ -418,7 +418,7 @@ li:last-child {
   font-style: italic;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
@@ -430,7 +430,7 @@ li:last-child {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #777;
-}
+} */
 
 .tab-content {
   display: none;
@@ -497,20 +497,62 @@ li:last-child {
     color: white;
   }
 
+  /* =========================================
+   2. MAIN
+   ========================================= */
+
   body {
     flex-direction: column;
   }
 
+  .profile-name,
+  h2 {
+    font-size: 30px;
+  }
+  .section-title {
+    font-size: 18px;
+  }
+  .profile-desc,
+  p,
+  li {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
   .main-content {
     margin-top: 60px;
-    margin-bottom: 50px;
-    padding: 20px;
+    padding: 20px 20px 90px 20px;
     width: 100%;
     box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .poster-gallery,
+  .poster-gallery.large-gallery {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding: 20px 20px 40px 20px;
+  }
+
+  .poster-item,
+  .poster-gallery.large-gallery .poster-item {
+    flex: 0 0 140px !important;
+    width: 140px !important;
+    height: auto !important;
+    scroll-snap-align: start;
+    margin: 0 !important;
+  }
+
+  .poster-gallery.large-gallery .poster-item {
+    flex: 0 0 160px;
   }
 
   /* =========================================
-   2. BOTTOM (SIDE) BAR
+   3. BOTTOM (SIDE) BAR
    ========================================= */
 
   .sidebar {
@@ -583,12 +625,20 @@ li:last-child {
 }
 
 .status-sidebar::-webkit-scrollbar,
-.sidebar::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar,
+body::-webkit-scrollbar,
+html::-webkit-scrollbar,
+.poster-gallery::-webkit-scrollbar,
+.main-content::-webkit-scrollbar {
   display: none;
 }
 
 .status-sidebar,
-.sidebar {
+.sidebar,
+body,
+html,
+.poster-gallery,
+.main-content {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
