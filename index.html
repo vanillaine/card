@@ -189,14 +189,31 @@
 
         <section id="homepage" class="tab-content" style="display: block">
           <div class="profile-header">
-            <img
-              src="https://pbs.twimg.com/profile_images/2025989555644690432/SZy3snum_400x400.jpg"
-              alt="Profile"
-              class="profile-img"
-            />
-            <div>
-              <h1 class="profile-name">Haseulbintaro</h1>
-              <p style="margin: 0"><span class="username">@vanillaine</span></p>
+            <div class="profile-avatar-wrapper">
+              <img
+                class="profile-img"
+                id="discord-avatar"
+                src="https://cdn.discordapp.com/embed/avatars/0.png"
+                alt="Profile"
+              />
+              <div id="discord-status-dot" class="status-dot offline"></div>
+            </div>
+
+            <div class="profile-info">
+              <div class="profile-name" id="discord-username">
+                Haseulbintaro
+              </div>
+
+              <div id="discord-subtext" class="discord-subtext">
+                <p style="margin: 0; line-height: 1">
+                  <span class="username" id="discord-activity-text"
+                    >@vanillaine</span
+                  >
+                  <span class="username" id="discord-status-text"
+                    >Currently Offline</span
+                  >
+                </p>
+              </div>
             </div>
           </div>
 
@@ -1139,6 +1156,87 @@
           bottomSheet.classList.remove("active");
         }
       });
+
+      // DISCORD LANYARD API
+      const discordID = "388320022340173834";
+
+      async function fetchDiscordStatus() {
+        try {
+          const response = await fetch(
+            `https://api.lanyard.rest/v1/users/${discordID}`,
+          );
+          const json = await response.json();
+
+          if (json.success) {
+            const data = json.data;
+            const discordUser = data.discord_user;
+
+            document.getElementById("discord-username").innerText =
+              discordUser.display_name || discordUser.username;
+
+            const avatarUrl = discordUser.avatar
+              ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`
+              : "https://cdn.discordapp.com/embed/avatars/0.png";
+            document.getElementById("discord-avatar").src = avatarUrl;
+
+            const statusDot = document.getElementById("discord-status-dot");
+            statusDot.className = `status-dot ${data.discord_status}`;
+
+            const statusTextElement = document.getElementById(
+              "discord-status-text",
+            );
+            const statusMap = {
+              online: "Currently Online",
+              idle: "Currently Idle",
+              dnd: "Do Not Disturb",
+              offline: "Currently Offline",
+            };
+            statusTextElement.innerText =
+              statusMap[data.discord_status] || "Offline";
+
+            const subtextContainer = document.getElementById("discord-subtext");
+            const activityTextElement = document.getElementById(
+              "discord-activity-text",
+            );
+
+            let hasActivity = false;
+
+            if (data.listening_to_spotify) {
+              activityTextElement.innerHTML = `<i class="fa-solid fa-music" style="color:#1DB954;"></i> ${data.spotify.song} - ${data.spotify.artist}`;
+              hasActivity = true;
+            } else if (data.activities.length > 0) {
+              const act = data.activities[0];
+
+              if (act.name.toLowerCase().includes("youtube music")) {
+                const songTitle = act.details || "Unknown Song";
+                const artist = act.state || "";
+
+                const displayText = artist
+                  ? `${artist} - ${songTitle}`
+                  : songTitle;
+
+                activityTextElement.innerHTML = `is listening to ${displayText}`;
+              } else {
+                if (act.details && act.state) {
+                  activityTextElement.innerText = `is playing ${act.name}: ${act.details}`;
+                } else {
+                  activityTextElement.innerText = act.state || act.name;
+                }
+              }
+              hasActivity = true;
+            }
+            if (hasActivity) {
+              subtextContainer.classList.add("has-activity");
+            } else {
+              subtextContainer.classList.remove("has-activity");
+            }
+          }
+        } catch (error) {
+          console.error("Fetch Lanyard failed:", error);
+        }
+      }
+      fetchDiscordStatus();
+      setInterval(fetchDiscordStatus, 15000);
     </script>
   </body>
 </html>

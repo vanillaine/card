@@ -196,22 +196,24 @@ li:last-child {
 
 .profile-name {
   font-family: "Ting Tong", sans-serif;
-  font-size: 50px;
-  font-weight: normal;
-  color: white;
-  margin-bottom: 0px;
+  font-size: 55px;
+  /* font-weight: 600; */
+  line-height: 0.7;
+  margin-bottom: 5px;
+  /* color: white; */
 }
 
 .section-name {
   font-size: 50px;
-  font-weight: normal;
+  font-weight: 600;
   color: white;
   margin-bottom: 0px;
 }
 
 .username {
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 15px;
-  color: white;
+  color: var(--text-muted);
   margin-bottom: 0px;
 }
 
@@ -689,4 +691,74 @@ html::-webkit-scrollbar,
   .poster-gallery.large-gallery .poster-item {
     flex: 0 0 160px;
   }
+}
+
+/* =========================================
+   DISCORD LANYARD
+   ========================================= */
+.profile-avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 4px solid var(--bg-main);
+  z-index: 2;
+}
+
+.status-dot.online {
+  background-color: #23a559;
+}
+.status-dot.idle {
+  background-color: #f0b232;
+}
+.status-dot.dnd {
+  background-color: #f23f43;
+}
+.status-dot.offline {
+  background-color: #80848e;
+}
+
+.discord-subtext {
+  margin-top: -2px;
+  cursor: default;
+  height: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.discord-subtext p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.discord-subtext span {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.discord-subtext.has-activity p {
+  transform: translateY(0);
+}
+.discord-subtext.has-activity:hover p {
+  transform: translateY(-24px);
+}
+
+.discord-subtext:not(.has-activity) #discord-activity-text {
+  display: none;
+}
+.discord-subtext:not(.has-activity) p {
+  transform: translateY(0);
 }
