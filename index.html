@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <header class="mobile-header">
+      <button class="burger-menu" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="mobile-title">Vanillaine</div>
+    </header>
     <nav class="sidebar">
       <div class="sidebar-title">Pages</div>
       <button
@@ -735,10 +741,7 @@
             <div class="poster-gallery kpop-posters large-gallery">
               <div class="poster-item idol-item">
                 <video class="idol-photo" autoplay muted loop playsinline>
-                  <source
-                    src="assets/haseul.mp4"
-                    type="video/mp4"
-                  />
+                  <source src="assets/haseul.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 <div class="idol-logo-wrapper">
@@ -814,6 +817,9 @@
     </main>
 
     <aside class="status-sidebar">
+      <div class="bottom-sheet-handle" onclick="toggleBottomSheet()">
+        <div class="handle-bar"></div>
+      </div>
       <div class="status-card">
         <h3><i class="fa-solid fa-gamepad"></i> Currently Playing</h3>
         <div class="status-game">
@@ -912,6 +918,37 @@
           activeBtn.classList.add("active");
         }
       }
+
+      function toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("active");
+      }
+
+      function toggleBottomSheet() {
+        const sheet = document.querySelector(".status-sidebar");
+        sheet.classList.toggle("active");
+
+        if (!sheet.classList.contains("active")) {
+          sheet.scrollTop = 0;
+        }
+      }
+
+      const bottomSheet = document.querySelector(".status-sidebar");
+      let startY;
+
+      bottomSheet.addEventListener("touchstart", (e) => {
+        startY = e.touches[0].clientY;
+      });
+
+      bottomSheet.addEventListener("touchend", (e) => {
+        let endY = e.changedTouches[0].clientY;
+
+        if (startY - endY > 50) {
+          bottomSheet.classList.add("active");
+        } else if (endY - startY > 50) {
+          bottomSheet.classList.remove("active");
+          bottomSheet.scrollTop = 0;
+        }
+      });
     </script>
   </body>
 </html>
