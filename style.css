@@ -740,7 +740,7 @@ html::-webkit-scrollbar,
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.discord-subtext span {
+.discord-subtext p > span {
   display: block;
   height: 24px;
   line-height: 24px;
@@ -761,4 +761,11 @@ html::-webkit-scrollbar,
 }
 .discord-subtext:not(.has-activity) p {
   transform: translateY(0);
+}
+
+.glow-text {
+  display: inline !important;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }

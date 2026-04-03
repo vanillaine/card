@@ -1215,12 +1215,13 @@
                   ? `${artist} - ${songTitle}`
                   : songTitle;
 
-                activityTextElement.innerHTML = `is listening to ${displayText}`;
+                activityTextElement.innerHTML = `is listening to <span class="glow-text">${displayText}</span>`;
               } else {
                 if (act.details && act.state) {
-                  activityTextElement.innerText = `is playing ${act.name}: ${act.details}`;
+                  activityTextElement.innerHTML = `is playing <span class="glow-text">${act.name}: ${act.details}</span>`;
                 } else {
-                  activityTextElement.innerText = act.state || act.name;
+                  const fallbackText = act.name || act.state;
+                  activityTextElement.innerHTML = `is playing <span class="glow-text">${fallbackText}</span>`;
                 }
               }
               hasActivity = true;
