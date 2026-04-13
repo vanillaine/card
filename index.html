@@ -1067,12 +1067,15 @@
         <h3><i class="fa-solid fa-tv"></i> Currently Watching</h3>
         <div class="status-poster">
           <img
+            id="anime-cover"
             src="https://pbs.twimg.com/media/HEhVpXjagAABfQr?format=jpg&name=medium"
             alt="Anime Cover"
           />
           <div class="status-info">
-            <span class="status-title">Steel Ball Run</span>
-            <span class="status-desc">Where tf is Eps 2</span>
+            <span id="anime-title" class="status-title">Steel Ball Run</span>
+            <span id="anime-progress" class="status-desc"
+              >Where tf is Eps 2</span
+            >
           </div>
         </div>
         <div class="status-poster">
@@ -1089,12 +1092,15 @@
         <h3><i class="fa-solid fa-book-open"></i> Currently Reading</h3>
         <div class="status-poster">
           <img
+            id="manga-cover"
             src="https://myanimelist.net/images/manga/1/267772l.jpg"
             alt="Manga Cover"
           />
           <div class="status-info">
-            <span class="status-title">The Bugle Call: Song of War</span>
-            <span class="status-desc">Chapter 30</span>
+            <span id="manga-title" class="status-title"
+              >The Bugle Call: Song of War</span
+            >
+            <span id="manga-progress" class="status-desc">Chapter 30</span>
           </div>
         </div>
         <div class="status-poster">
@@ -1188,7 +1194,7 @@
         }
       });
 
-      // DISCORD LANYARD API
+      // DISCORD LANYARD API START
       const discordID = "388320022340173834";
 
       async function fetchDiscordStatus() {
@@ -1269,6 +1275,71 @@
       }
       fetchDiscordStatus();
       setInterval(fetchDiscordStatus, 15000);
+
+      // DISCORD LANYARD API END
+
+      // MAL JIKAN API START
+
+      const malUsername = "vanillaine";
+
+      async function fetchMALStatus() {
+        try {
+          // Currently Watching
+          const animeResponse = await fetch(
+            `https://api.jikan.moe/v4/users/${malUsername}/animelist?status=watching`,
+          );
+          const animeData = await animeResponse.json();
+
+          if (animeData.data && animeData.data.length > 0) {
+            const latestAnime = animeData.data[0];
+            const title = latestAnime.anime.title;
+            const coverUrl = latestAnime.anime.images.webp.image_url;
+            const totalEps = latestAnime.anime.episodes || "?";
+
+            const watchedEps =
+              latestAnime.episodes_watched ??
+              latestAnime.list_status?.num_episodes_watched ??
+              "?";
+
+            document.getElementById("anime-title").innerText = title;
+            document.getElementById("anime-cover").src = coverUrl;
+            document.getElementById("anime-progress").innerText =
+              `Episodes: ${watchedEps}/${totalEps}`;
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, 500));
+
+          // Currently Reading
+          const mangaResponse = await fetch(
+            `https://api.jikan.moe/v4/users/${malUsername}/mangalist?status=reading`,
+          );
+          const mangaData = await mangaResponse.json();
+
+          if (mangaData.data && mangaData.data.length > 0) {
+            const latestManga = mangaData.data[0];
+            const title = latestManga.manga.title;
+            const coverUrl = latestManga.manga.images.webp.image_url;
+            const totalChaps = latestManga.manga.chapters || "?";
+
+            const readChaps =
+              latestManga.chapters_read ??
+              latestManga.list_status?.num_chapters_read ??
+              "?";
+
+            document.getElementById("manga-title").innerText = title;
+            document.getElementById("manga-cover").src = coverUrl;
+            document.getElementById("manga-progress").innerText =
+              `Chapters: ${readChaps}/${totalChaps}`;
+          }
+        } catch (error) {
+          console.error(
+            "Failed fetching profile data from MyAnimeList:",
+            error,
+          );
+        }
+        fetchMALStatus();
+      }
+      // MAL JIKAN API END
     </script>
   </body>
 </html>
