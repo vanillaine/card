@@ -1284,60 +1284,51 @@
 
       async function fetchMALStatus() {
         try {
-          // Currently Watching
           const animeResponse = await fetch(
-            `https://api.jikan.moe/v4/users/${malUsername}/animelist?status=watching`,
+            `https://api.jikan.moe/v4/users/${malUsername}/userupdates`,
           );
-          const animeData = await animeResponse.json();
+          const updateData = await response.json();
 
-          if (animeData.data && animeData.data.length > 0) {
-            const latestAnime = animeData.data[0];
-            const title = latestAnime.anime.title;
-            const coverUrl = latestAnime.anime.images.webp.image_url;
-            const totalEps = latestAnime.anime.episodes || "?";
+          if (updateData.data) {
+            // Currently Watching
+            const latestAnime = updateData.data.anime.find(
+              (a) => a.status === "Watching",
+            );
 
-            const watchedEps =
-              latestAnime.episodes_watched ??
-              latestAnime.list_status?.num_episodes_watched ??
-              "?";
+            if (latestAnime) {
+              const title = latestAnime.entry.title;
+              const coverUrl = latestAnime.entry.images.webp.image_url;
+              const totalEps = latestAnime.episodes_total || "?";
+              const watchedEps = latestAnime.episodes_seen || "?";
 
-            document.getElementById("anime-title").innerText = title;
-            document.getElementById("anime-cover").src = coverUrl;
-            document.getElementById("anime-progress").innerText =
-              `Episodes: ${watchedEps}/${totalEps}`;
-          }
+              document.getElementById("anime-title").textContent = title;
+              document.getElementById("anime-cover").src = coverUrl;
+              document.getElementById("anime-progress").textContent =
+                `Episodes: ${watchedEps}/${totalEps}`;
+            }
 
-          await new Promise((resolve) => setTimeout(resolve, 500));
+            // Currently Reading
+            const latestManga = updateData.data.manga.find(
+              (m) => m.status === "Reading",
+            );
 
-          // Currently Reading
-          const mangaResponse = await fetch(
-            `https://api.jikan.moe/v4/users/${malUsername}/mangalist?status=reading`,
-          );
-          const mangaData = await mangaResponse.json();
+            if (latestManga) {
+              const title = latestManga.entry.title;
+              const coverUrl = latestManga.entry.images.webp.image_url;
+              const totalChaps = latestManga.chapters_total || "?";
+              const readChaps = latestManga.chapters_read || "?";
 
-          if (mangaData.data && mangaData.data.length > 0) {
-            const latestManga = mangaData.data[0];
-            const title = latestManga.manga.title;
-            const coverUrl = latestManga.manga.images.webp.image_url;
-            const totalChaps = latestManga.manga.chapters || "?";
-
-            const readChaps =
-              latestManga.chapters_read ??
-              latestManga.list_status?.num_chapters_read ??
-              "?";
-
-            document.getElementById("manga-title").innerText = title;
-            document.getElementById("manga-cover").src = coverUrl;
-            document.getElementById("manga-progress").innerText =
-              `Chapters: ${readChaps}/${totalChaps}`;
+              document.getElementById("manga-title").textContent = title;
+              document.getElementById("manga-cover").src = coverUrl;
+              document.getElementById("manga-progress").textContent =
+                `Chapters: ${readChaps}/${totalChaps}`;
+            }
           }
         } catch (error) {
-          console.error(
-            "Failed fetching profile data from MyAnimeList:",
-            error,
-          );
+          console.error("Failed fetching data from MyAnimeList:", error);
         }
       }
+
       fetchMALStatus();
       // MAL JIKAN API END
     </script>
