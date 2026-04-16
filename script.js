@@ -55,7 +55,7 @@ function createStatus(mediaList, type) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                            Status bar tab mobile                           */
+/*                            Status bar bottom sheet mobile                  */
 /* -------------------------------------------------------------------------- */
 
 function openTab(tabId) {
@@ -101,6 +101,16 @@ function toggleBottomSheet() {
     sheet.scrollTop = 0;
   }
 }
+
+const tabButtons = document.querySelectorAll(".nav-btn[data-tab]");
+
+tabButtons.forEach((el) => {
+  button.addEventListener("click", function () {
+    const targetTab = this.getAttribute("data-tab");
+
+    openTab(targetTab);
+  });
+});
 
 const bottomSheet = document.querySelector(".status-sidebar");
 const sheetHandle = document.querySelector(".bottom-sheet-handle");
