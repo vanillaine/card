@@ -1,4 +1,60 @@
 /* -------------------------------------------------------------------------- */
+/*                               HTMLs for Jikan                              */
+/* -------------------------------------------------------------------------- */
+
+function createPoster(mediaList, defaultType) {
+  let html = "";
+  mediaList.forEach((el) => {
+    const title = el.title || "Unknown Title";
+    const type = el.type || defaultType;
+    const year = el.start_year || "?";
+    const imgUrl =
+      el.images?.webp?.image_url || el.images?.jpg?.image_url || "";
+
+    html += `
+      <div class="poster-item">
+        <img src="${imgUrl}" alt="${title}" loading="lazy" />
+          <div class="poster-overlay">
+            <span class="poster-top">${type} • ${year}</span>
+            <span class="poster-bottom">${title}</span>
+          </div>
+        </div>
+      `;
+  });
+  return html;
+}
+
+function createStatus(mediaList, type) {
+  let html = "";
+  mediaList.forEach((el) => {
+    const title = el.entry.title;
+    const coverUrl = el.entry.images.webp.image_url;
+
+    let progressText = "";
+    if (type === "Anime") {
+      const totalEps = el.episodes_total ?? "?";
+      const watchedEps = el.episodes_seen ?? "?";
+      progressText = `Episodes: ${watchedEps}/${totalEps}`;
+    } else {
+      const totalChaps = el.chapters_total ?? "?";
+      const readChaps = el.chapters_read ?? "?";
+      progressText = `Chapters: ${readChaps}/${totalChaps}`;
+    }
+
+    html += `
+      <div class="status-poster">
+        <img src="${coverUrl}" alt="${type} Cover" loading="lazy" />
+        <div class="status-info">
+          <span class="status-title">${title}</span>
+          <span class="status-desc">${progressText}</span>
+        </div>
+      </div>
+    `;
+  });
+  return html;
+}
+
+/* -------------------------------------------------------------------------- */
 /*                            Status bar tab mobile                           */
 /* -------------------------------------------------------------------------- */
 
@@ -183,24 +239,10 @@ async function fetchMALStatus() {
 
       const staticAnime = document.getElementById("static-anime");
       if (staticAnime && currentlyWatching.length > 0) {
-        let animeHTML = "";
-        currentlyWatching.forEach((anime) => {
-          const title = anime.entry.title;
-          const coverUrl = anime.entry.images.webp.image_url;
-          const totalEps = anime.episodes_total ?? "?";
-          const watchedEps = anime.episodes_seen ?? "?";
-
-          animeHTML += `
-                  <div class="status-poster">
-                    <img src="${coverUrl}" alt="Anime Cover" />
-                    <div class="status-info">
-                      <span class="status-title">${title}</span>
-                      <span class="status-desc">Episodes: ${watchedEps}/${totalEps}</span>
-                    </div>
-                  </div>
-                `;
-        });
-        staticAnime.insertAdjacentHTML("beforebegin", animeHTML);
+        staticAnime.insertAdjacentHTML(
+          "beforebegin",
+          createStatus(currentlyWatching, "Anime"),
+        );
       }
 
       const mangaList = updateData.data.manga || [];
@@ -210,24 +252,10 @@ async function fetchMALStatus() {
 
       const staticManga = document.getElementById("static-manga");
       if (staticManga && currentlyReading.length > 0) {
-        let mangaHTML = "";
-        currentlyReading.forEach((manga) => {
-          const title = manga.entry.title;
-          const coverUrl = manga.entry.images.webp.image_url;
-          const totalChaps = manga.chapters_total ?? "?";
-          const readChaps = manga.chapters_read ?? "?";
-
-          mangaHTML += `
-                  <div class="status-poster">
-                    <img src="${coverUrl}" alt="Manga Cover" />
-                    <div class="status-info">
-                      <span class="status-title">${title}</span>
-                      <span class="status-desc">Chapters: ${readChaps}/${totalChaps}</span>
-                    </div>
-                  </div>
-                `;
-        });
-        staticManga.insertAdjacentHTML("beforebegin", mangaHTML);
+        staticManga.insertAdjacentHTML(
+          "beforebegin",
+          createStatus(currentlyReading, "Manga"),
+        );
       }
     }
   } catch (error) {
@@ -256,51 +284,14 @@ async function fetchMALFavorites() {
       const animeContainer = document.querySelector(".anime-posters");
 
       if (animeContainer && animeFavs.length > 0) {
-        let animeHTML = "";
-        animeFavs.forEach((anime) => {
-          const title = anime.title || "Unknown Title";
-          const type = anime.type || "Anime";
-          const year = anime.start_year || "?";
-
-          const imgUrl =
-            anime.images?.webp?.image_url || anime.images?.jpg?.image_url || "";
-
-          animeHTML += `
-                  <div class="poster-item">
-                    <img src="${imgUrl}" alt="${title}" />
-                    <div class="poster-overlay">
-                      <span class="poster-top">${type} • ${year}</span>
-                      <span class="poster-bottom">${title}</span>
-                    </div>
-                  </div>
-                `;
-        });
-        animeContainer.innerHTML = animeHTML;
+        animeContainer.innerHTML = createPoster(animeFavs, "Anime");
       }
 
       const mangaFavs = favData.data.manga || [];
       const mangaContainer = document.querySelector(".manga-posters");
 
       if (mangaContainer && mangaFavs.length > 0) {
-        let mangaHTML = "";
-        mangaFavs.forEach((manga) => {
-          const title = manga.title || "Unknown Title";
-          const type = manga.type || "Manga";
-          const year = manga.start_year || "?";
-          const imgUrl =
-            manga.images?.webp?.image_url || manga.images?.jpg?.image_url || "";
-
-          mangaHTML += `
-                  <div class="poster-item">
-                    <img src="${imgUrl}" alt="${title}" />
-                    <div class="poster-overlay">
-                      <span class="poster-top">${type} • ${year}</span>
-                      <span class="poster-bottom">${title}</span>
-                    </div>
-                  </div>
-                `;
-        });
-        mangaContainer.innerHTML = mangaHTML;
+        mangaContainer.innerHTML = createPoster(mangaFavs, "Manga");
       }
     }
   } catch (error) {
