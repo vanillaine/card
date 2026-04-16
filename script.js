@@ -151,6 +151,13 @@ bottomSheet.addEventListener("touchend", (e) => {
 
 const discordID = "388320022340173834";
 
+const elDiscordUsername = document.getElementById("discord-username");
+const elDiscordAvatar = document.getElementById("discord-avatar");
+const elDiscordStatusDot = document.getElementById("discord-status-dot");
+const elDiscordStatusText = document.getElementById("discord-status-text");
+const elDiscordSubtext = document.getElementById("discord-subtext");
+const elDiscordActivityText = document.getElementById("discord-activity-text");
+
 async function fetchDiscordStatus() {
   try {
     const response = await fetch(
@@ -162,66 +169,72 @@ async function fetchDiscordStatus() {
       const data = json.data;
       const discordUser = data.discord_user;
 
-      document.getElementById("discord-username").innerText =
-        discordUser.display_name || discordUser.username;
+      if (elDiscordUsername) {
+        elDiscordUsername.innerText =
+          discordUser.display_name || discordUser.username;
+      }
 
       const avatarUrl = discordUser.avatar
         ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`
         : "https://cdn.discordapp.com/embed/avatars/0.png";
-      document.getElementById("discord-avatar").src = avatarUrl;
 
-      const statusDot = document.getElementById("discord-status-dot");
-      statusDot.className = `status-dot ${data.discord_status}`;
+      if (elDiscordAvatar) elDiscordAvatar.src = avatarUrl;
 
-      const statusTextElement = document.getElementById("discord-status-text");
+      if (elDiscordStatusDot) {
+        elDiscordStatusDot.className = `status-dot ${data.discord_status}`;
+      }
+
       const statusMap = {
         online: "Currently Online",
         idle: "Currently Idle",
         dnd: "Do Not Disturb",
         offline: "Currently Offline",
       };
-      statusTextElement.innerText = statusMap[data.discord_status] || "Offline";
 
-      const subtextContainer = document.getElementById("discord-subtext");
-      const activityTextElement = document.getElementById(
-        "discord-activity-text",
-      );
+      if (elDiscordStatusText) {
+        elDiscordStatusText.innerText =
+          statusMap[data.discord_status] || "Offline";
+      }
 
       let hasActivity = false;
 
-      if (data.listening_to_spotify) {
-        activityTextElement.innerHTML = `<i class="fa-solid fa-music" style="color:#1DB954;"></i> ${data.spotify.song} - ${data.spotify.artist}`;
-        hasActivity = true;
-      } else if (data.activities.length > 0) {
-        const act = data.activities[0];
+      if (elDiscordActivityText) {
+        if (data.listening_to_spotify) {
+          elDiscordActivityText.innerHTML = `<i class="fa-solid fa-music" style="color:#1DB954;"></i> ${data.spotify.song} - ${data.spotify.artist}`;
+          hasActivity = true;
+        } else if (data.activities.length > 0) {
+          const act = data.activities[0];
 
-        if (act.name.toLowerCase().includes("youtube music")) {
-          const songTitle = act.details || "Unknown Song";
-          const artist = act.state || "";
-
-          const displayText = artist ? `${artist} - ${songTitle}` : songTitle;
-
-          activityTextElement.innerHTML = `is listening to <span class="glow-text">${displayText}</span>`;
-        } else {
-          if (act.details && act.state) {
-            activityTextElement.innerHTML = `is playing <span class="glow-text">${act.name}: ${act.details}</span>`;
+          if (act.name.toLowerCase().includes("youtube music")) {
+            const songTitle = act.details || "Unknown Song";
+            const artist = act.state || "";
+            const displayText = artist ? `${artist} - ${songTitle}` : songTitle;
+            elDiscordActivityText.innerHTML = `is listening to <span class="glow-text">${displayText}</span>`;
           } else {
-            const fallbackText = act.name || act.state;
-            activityTextElement.innerHTML = `is playing <span class="glow-text">${fallbackText}</span>`;
+            if (act.details && act.state) {
+              elDiscordActivityText.innerHTML = `is playing <span class="glow-text">${act.name}: ${act.details}</span>`;
+            } else {
+              const fallbackText = act.name || act.state;
+              elDiscordActivityText.innerHTML = `is playing <span class="glow-text">${fallbackText}</span>`;
+            }
           }
+          hasActivity = true;
         }
-        hasActivity = true;
       }
-      if (hasActivity) {
-        subtextContainer.classList.add("has-activity");
-      } else {
-        subtextContainer.classList.remove("has-activity");
+
+      if (elDiscordSubtext) {
+        if (hasActivity) {
+          elDiscordSubtext.classList.add("has-activity");
+        } else {
+          elDiscordSubtext.classList.remove("has-activity");
+        }
       }
     }
   } catch (error) {
     console.error("Fetch Lanyard failed:", error);
   }
 }
+
 fetchDiscordStatus();
 setInterval(fetchDiscordStatus, 15000);
 
@@ -317,6 +330,9 @@ fetchMALFavorites();
 
 const owPlayerId = "Broflovskye-1857";
 
+const elOwDesc1 = document.getElementById("ow-desc-1");
+const elOwDesc2 = document.getElementById("ow-desc-2");
+
 async function fetchOverwatchStatus() {
   try {
     const response = await fetch(
@@ -326,34 +342,29 @@ async function fetchOverwatchStatus() {
     if (!response.ok) throw new Error("Failed fetching Overwatch Data");
 
     const owData = await response.json();
-
     const username = owData.summary.username || "Unknown";
 
-    const owDesc1 = document.getElementById("ow-desc-1");
-    if (owDesc1) {
-      owDesc1.innerHTML = `<strong>${username}</strong>`;
+    // Langsung gunakan variabel cache
+    if (elOwDesc1) {
+      elOwDesc1.innerHTML = `<strong>${username}</strong>`;
     }
 
-    const owDesc2 = document.getElementById("ow-desc-2");
-    if (owDesc2 && owData.summary.competitive?.pc?.support) {
+    if (elOwDesc2 && owData.summary.competitive?.pc?.support) {
       const supportData = owData.summary.competitive.pc.support;
-
       const division = supportData.division
         ? supportData.division.charAt(0).toUpperCase() +
           supportData.division.slice(1)
         : "Unranked";
-
       const tier = supportData.tier ?? "";
 
-      owDesc2.textContent = `Support - ${division} ${tier}`.trim();
-    } else if (owDesc2) {
-      owDesc2.textContent = "Support - Unranked";
+      elOwDesc2.textContent = `Support - ${division} ${tier}`.trim();
+    } else if (elOwDesc2) {
+      elOwDesc2.textContent = "Support - Unranked";
     }
   } catch (error) {
     console.error("Overwatch Fetch Error:", error);
-    document.getElementById("ow-desc-1").innerHTML =
-      "<strong>Broflovskye</strong>";
-    document.getElementById("ow-desc-2").textContent = "Support - Unknown";
+    if (elOwDesc1) elOwDesc1.innerHTML = "<strong>Broflovskye</strong>";
+    if (elOwDesc2) elOwDesc2.textContent = "Support - Unknown";
   }
 }
 
