@@ -1,60 +1,4 @@
 /* -------------------------------------------------------------------------- */
-/*                               HTMLs for Jikan                              */
-/* -------------------------------------------------------------------------- */
-
-function createPoster(mediaList, defaultType) {
-  let html = "";
-  mediaList.forEach((el) => {
-    const title = el.title || "Unknown Title";
-    const type = el.type || defaultType;
-    const year = el.start_year || "?";
-    const imgUrl =
-      el.images?.webp?.image_url || el.images?.jpg?.image_url || "";
-
-    html += `
-      <div class="poster-item">
-        <img src="${imgUrl}" alt="${title}" loading="lazy" />
-          <div class="poster-overlay">
-            <span class="poster-top">${type} • ${year}</span>
-            <span class="poster-bottom">${title}</span>
-          </div>
-        </div>
-      `;
-  });
-  return html;
-}
-
-function createStatus(mediaList, type) {
-  let html = "";
-  mediaList.forEach((el) => {
-    const title = el.entry.title;
-    const coverUrl = el.entry.images.webp.image_url;
-
-    let progressText = "";
-    if (type === "Anime") {
-      const totalEps = el.episodes_total ?? "?";
-      const watchedEps = el.episodes_seen ?? "?";
-      progressText = `Episodes: ${watchedEps}/${totalEps}`;
-    } else {
-      const totalChaps = el.chapters_total ?? "?";
-      const readChaps = el.chapters_read ?? "?";
-      progressText = `Chapters: ${readChaps}/${totalChaps}`;
-    }
-
-    html += `
-      <div class="status-poster">
-        <img src="${coverUrl}" alt="${type} Cover" loading="lazy" />
-        <div class="status-info">
-          <span class="status-title">${title}</span>
-          <span class="status-desc">${progressText}</span>
-        </div>
-      </div>
-    `;
-  });
-  return html;
-}
-
-/* -------------------------------------------------------------------------- */
 /*                            Status bar bottom sheet mobile                  */
 /* -------------------------------------------------------------------------- */
 
@@ -235,9 +179,6 @@ async function fetchDiscordStatus() {
   }
 }
 
-fetchDiscordStatus();
-setInterval(fetchDiscordStatus, 15000);
-
 /* -------------------------------------------------------------------------- */
 /*                       Jikan API - MyAnimeList status                       */
 /* -------------------------------------------------------------------------- */
@@ -286,8 +227,6 @@ async function fetchMALStatus() {
   }
 }
 
-fetchMALStatus();
-
 /* -------------------------------------------------------------------------- */
 /*                      Jikan API - MyAnimeList Favorites                     */
 /* -------------------------------------------------------------------------- */
@@ -322,7 +261,61 @@ async function fetchMALFavorites() {
   }
 }
 
-fetchMALFavorites();
+/* -------------------------------------------------------------------------- */
+/*                               HTMLs for Jikan API                          */
+/* -------------------------------------------------------------------------- */
+
+function createPoster(mediaList, defaultType) {
+  let html = "";
+  mediaList.forEach((el) => {
+    const title = el.title || "Unknown Title";
+    const type = el.type || defaultType;
+    const year = el.start_year || "?";
+    const imgUrl =
+      el.images?.webp?.image_url || el.images?.jpg?.image_url || "";
+
+    html += `
+      <div class="poster-item">
+        <img src="${imgUrl}" alt="${title}" loading="lazy" />
+          <div class="poster-overlay">
+            <span class="poster-top">${type} • ${year}</span>
+            <span class="poster-bottom">${title}</span>
+          </div>
+        </div>
+      `;
+  });
+  return html;
+}
+
+function createStatus(mediaList, type) {
+  let html = "";
+  mediaList.forEach((el) => {
+    const title = el.entry.title;
+    const coverUrl = el.entry.images.webp.image_url;
+
+    let progressText = "";
+    if (type === "Anime") {
+      const totalEps = el.episodes_total ?? "?";
+      const watchedEps = el.episodes_seen ?? "?";
+      progressText = `Episodes: ${watchedEps}/${totalEps}`;
+    } else {
+      const totalChaps = el.chapters_total ?? "?";
+      const readChaps = el.chapters_read ?? "?";
+      progressText = `Chapters: ${readChaps}/${totalChaps}`;
+    }
+
+    html += `
+      <div class="status-poster">
+        <img src="${coverUrl}" alt="${type} Cover" loading="lazy" />
+        <div class="status-info">
+          <span class="status-title">${title}</span>
+          <span class="status-desc">${progressText}</span>
+        </div>
+      </div>
+    `;
+  });
+  return html;
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                Overfast API                                */
@@ -344,7 +337,6 @@ async function fetchOverwatchStatus() {
     const owData = await response.json();
     const username = owData.summary.username || "Unknown";
 
-    // Langsung gunakan variabel cache
     if (elOwDesc1) {
       elOwDesc1.innerHTML = `<strong>${username}</strong>`;
     }
@@ -368,4 +360,17 @@ async function fetchOverwatchStatus() {
   }
 }
 
-fetchOverwatchStatus();
+/* -------------------------------------------------------------------------- */
+/*                               Initialization                               */
+/* -------------------------------------------------------------------------- */
+
+function initApp() {
+  fetchDiscordStatus();
+  fetchMALStatus();
+  fetchMALFavorites();
+  fetchOverwatchStatus();
+
+  setInterval(fetchDiscordStatus, 15000);
+}
+
+document.addEventListener("DOMContentLoaded", initApp);
