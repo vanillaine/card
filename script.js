@@ -48,7 +48,7 @@ function toggleBottomSheet() {
 
 const tabButtons = document.querySelectorAll(".nav-btn[data-tab]");
 
-tabButtons.forEach((el) => {
+tabButtons.forEach((button) => {
   button.addEventListener("click", function () {
     const targetTab = this.getAttribute("data-tab");
 
