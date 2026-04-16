@@ -61,6 +61,9 @@ const sheetHandle = document.querySelector(".bottom-sheet-handle");
 let handleStartY;
 let sheetStartY;
 
+const SWIPE_UP_THRESHOLD = 40;
+const SWIPE_DOWN_THRESHOLD = 50;
+
 sheetHandle.addEventListener("touchstart", (e) => {
   handleStartY = e.touches[0].clientY;
 });
@@ -68,9 +71,9 @@ sheetHandle.addEventListener("touchstart", (e) => {
 sheetHandle.addEventListener("touchend", (e) => {
   let handleEndY = e.changedTouches[0].clientY;
 
-  if (handleStartY - handleEndY > 40) {
+  if (handleStartY - handleEndY > SWIPE_UP_THRESHOLD) {
     bottomSheet.classList.add("active");
-  } else if (handleEndY - handleStartY > 40) {
+  } else if (handleEndY - handleStartY > SWIPE_UP_THRESHOLD) {
     bottomSheet.classList.remove("active");
   }
 });
@@ -84,7 +87,10 @@ bottomSheet.addEventListener("touchend", (e) => {
   if (e.target.closest(".bottom-sheet-handle")) return;
   let sheetEndY = e.changedTouches[0].clientY;
 
-  if (sheetEndY - sheetStartY > 50 && bottomSheet.scrollTop <= 0) {
+  if (
+    sheetEndY - sheetStartY > SWIPE_DOWN_THRESHOLD &&
+    bottomSheet.scrollTop <= 0
+  ) {
     bottomSheet.classList.remove("active");
   }
 });
