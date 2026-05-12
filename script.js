@@ -108,6 +108,62 @@ const elDiscordStatusText = document.getElementById("discord-status-text");
 const elDiscordSubtext = document.getElementById("discord-subtext");
 const elDiscordActivityText = document.getElementById("discord-activity-text");
 
+function updateActivity(data) {
+  const container = document.getElementById("activity-container");
+  if (!container) return;
+
+  // Prioritas 1: Spotify
+  if (data.listening_to_spotify && data.spotify) {
+    const sp = data.spotify;
+    document.getElementById("activity-type-label").textContent = "SPOTIFY";
+    document.getElementById("activity-title").textContent = sp.song;
+    document.getElementById("activity-artist").textContent = sp.artist;
+    document.getElementById("activity-album").textContent = sp.album;
+    const art = document.getElementById("activity-art");
+    art.src = sp.album_art_url || "";
+    art.style.display = sp.album_art_url ? "block" : "none";
+    container.style.display = "block";
+    return;
+  }
+
+  // Prioritas 2: Activities lain
+  const activities = data.activities || [];
+  const act = activities.find((a) => a.type === 0 || a.type === 2);
+  if (act) {
+    const isMusic =
+      act.name.toLowerCase().includes("youtube music") || act.type === 2;
+    document.getElementById("activity-type-label").textContent = isMusic
+      ? "YOUTUBE MUSIC"
+      : "PLAYING";
+    document.getElementById("activity-title").textContent =
+      act.details || act.name;
+    document.getElementById("activity-artist").textContent = isMusic
+      ? act.state || ""
+      : act.name;
+    document.getElementById("activity-album").textContent =
+      act.state && !isMusic ? act.state : "";
+
+    const art = document.getElementById("activity-art");
+    if (act.assets?.large_image && act.application_id) {
+      const imgKey = act.assets.large_image;
+      if (imgKey.startsWith("spotify:")) {
+        art.src = `https://i.scdn.co/image/${imgKey.replace("spotify:", "")}`;
+      } else if (imgKey.startsWith("mp:external/")) {
+        art.src = `https://media.discordapp.net/external/${imgKey.replace("mp:external/", "")}`;
+      } else {
+        art.src = `https://cdn.discordapp.com/app-assets/${act.application_id}/${imgKey}.png`;
+      }
+      art.style.display = "block";
+    } else {
+      art.style.display = "none";
+    }
+    container.style.display = "block";
+    return;
+  }
+
+  container.style.display = "none";
+}
+
 async function fetchDiscordStatus() {
   try {
     const response = await fetch(
@@ -146,39 +202,7 @@ async function fetchDiscordStatus() {
           statusMap[data.discord_status] || "Offline";
       }
 
-      let hasActivity = false;
-
-      if (elDiscordActivityText) {
-        if (data.listening_to_spotify) {
-          elDiscordActivityText.innerHTML = `<i class="fa-solid fa-music" style="color:#1DB954;"></i> ${data.spotify.song} - ${data.spotify.artist}`;
-          hasActivity = true;
-        } else if (data.activities.length > 0) {
-          const act = data.activities[0];
-
-          if (act.name.toLowerCase().includes("youtube music")) {
-            const songTitle = act.details || "Unknown Song";
-            const artist = act.state || "";
-            const displayText = artist ? `${artist} - ${songTitle}` : songTitle;
-            elDiscordActivityText.innerHTML = `is listening to <span class="glow-text">${displayText}</span>`;
-          } else {
-            if (act.details && act.state) {
-              elDiscordActivityText.innerHTML = `is playing <span class="glow-text">${act.name}: ${act.details}</span>`;
-            } else {
-              const fallbackText = act.name || act.state;
-              elDiscordActivityText.innerHTML = `is playing <span class="glow-text">${fallbackText}</span>`;
-            }
-          }
-          hasActivity = true;
-        }
-      }
-
-      if (elDiscordSubtext) {
-        if (hasActivity) {
-          elDiscordSubtext.classList.add("has-activity");
-        } else {
-          elDiscordSubtext.classList.remove("has-activity");
-        }
-      }
+      updateActivity(data);
     }
   } catch (error) {
     console.error("Fetch Lanyard failed:", error);
