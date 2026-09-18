@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-sidebar: #0f0d1e;
+  --color-bg-main: #13102a;
+  --color-text-main: #d1d5db;
+  --color-text-muted: #8e93b0;
+  --color-accent-blue: #8b7ff5;
+  --color-line: #241e52;
+  --color-badge: #1e1944;
+  --color-hover: #1c1840;
+
+  --font-jakarta: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  --font-tingtong: "Ting Tong", sans-serif;
+  --font-caslon: "ACaslonPro-Regular", sans-serif;
+  --font-avantgarde: "ITC Avant Garde Gothic LT Extra Light", sans-serif;
+
+  --breakpoint-tablet: 1200px;
+  --breakpoint-mobile: 1100px;
+
+  --animate-bar-bounce: bar-bounce 1s ease-in-out infinite;
+}
+
+@keyframes bar-bounce {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "Ting Tong";
+    src: url("/assets/TingTong.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "ACaslonPro-Regular";
+    src: url("/assets/ACaslonPro-Regular_0.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "ITC Avant Garde Gothic LT Extra Light";
+    src: url("/assets/ITC\ Avant\ Garde\ Gothic\ LT\ Extra\ Light.ttf")
+      format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  img,
+  video {
+    @apply pointer-events-none select-none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+  }
+
+  body {
+    @apply flex h-screen overflow-hidden text-text-main font-jakarta scrollbar-hide;
+    background: linear-gradient(154deg, #102535 0%, #13102a 50%, #1c0d24 100%);
+  }
+
+  hr {
+    @apply border border-[#3f3f46] my-[30px];
+  }
+
+  p {
+    @apply mb-5 text-base max-md:text-[15px] max-md:leading-[1.6];
+  }
+
+  ul {
+    @apply list-disc pl-5;
+  }
+
+  li {
+    @apply text-base max-md:text-[15px] max-md:leading-[1.6];
+  }
+
+  li:last-child {
+    @apply mb-5;
+  }
+}
+
+@layer components {
+  .nav-btn {
+    @apply bg-transparent border-none px-3 py-2.5 mb-[5px] rounded-lg text-left text-sm cursor-pointer transition-all duration-200 ease-in-out flex items-center gap-3;
+  }
+  .nav-btn i {
+    @apply text-accent-blue w-5 text-center;
+  }
+
+  .badge {
+    @apply bg-badge text-sm font-medium px-2 py-1 rounded text-white mr-1.5;
+  }
+
+  .media-category {
+    @apply mb-10;
+  }
+  .media-category h2 {
+    @apply font-caslon text-[28px] text-white font-semibold mb-2.5 mt-5 max-md:text-[30px];
+  }
+  .section-name {
+    @apply font-caslon text-[50px] font-semibold text-white mb-5;
+  }
+
+  .poster-gallery {
+    @apply flex flex-nowrap gap-[10px] my-[15px] px-[5px] py-[15px];
+    @apply max-tablet:flex! max-tablet:flex-nowrap! max-tablet:overflow-x-auto! max-tablet:[scroll-snap-type:x_mandatory] max-tablet:gap-[15px] max-tablet:px-5! max-tablet:pt-5! max-tablet:pb-10!;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .poster-gallery {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-line) transparent;
+    }
+    .poster-gallery::-webkit-scrollbar {
+      height: 8px;
+      display: block;
+    }
+    .poster-gallery::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .poster-gallery::-webkit-scrollbar-thumb {
+      background: var(--color-line);
+      border-radius: 10px;
+    }
+    .poster-gallery::-webkit-scrollbar-thumb:hover {
+      background: var(--color-text-muted);
+    }
+  }
+
+  .poster-item {
+    @apply relative w-[115px] aspect-[2/3] rounded-md overflow-hidden border border-line cursor-pointer shrink-0;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+    @apply max-tablet:flex-[0_0_140px]! max-tablet:w-[140px]! max-tablet:h-auto! max-tablet:[scroll-snap-align:start] max-tablet:m-0!;
+  }
+  .poster-gallery:not([data-touch-mode]) .poster-item:hover,
+  .poster-item[data-touch="true"] {
+    transform: scale(1.15);
+    border-color: var(--color-accent-blue);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+  .poster-item img,
+  .poster-item video {
+    @apply w-full h-full object-cover block;
+  }
+  .poster-overlay {
+    @apply absolute inset-0 flex flex-col justify-between p-[6px] text-white opacity-0 transition-opacity duration-200 pointer-events-none font-avantgarde;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.1) 30%,
+      rgba(0, 0, 0, 0.1) 70%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+  }
+  .poster-gallery:not([data-touch-mode]) .poster-item:hover .poster-overlay,
+  .poster-item[data-touch="true"] .poster-overlay {
+    opacity: 1;
+  }
+  .poster-top {
+    @apply text-[10px] text-right font-avantgarde;
+  }
+  .poster-bottom {
+    @apply text-[11px] font-bold text-left leading-[1.2] font-avantgarde;
+  }
+
+  .idol-item {
+    @apply bg-white;
+  }
+  .idol-photo {
+    @apply absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[400ms] z-[1];
+  }
+  .idol-logo-wrapper {
+    @apply absolute inset-0 flex items-center justify-center bg-white p-[15px] transition-opacity duration-[400ms] z-[2];
+  }
+  .idol-logo-wrapper .idol-logo {
+    @apply w-full h-auto object-contain;
+  }
+  .poster-gallery:not([data-touch-mode]) .idol-item:hover .idol-photo,
+  .idol-item[data-touch="true"] .idol-photo {
+    opacity: 1;
+  }
+  .poster-gallery:not([data-touch-mode]) .idol-item:hover .idol-logo-wrapper,
+  .idol-item[data-touch="true"] .idol-logo-wrapper {
+    opacity: 0;
+  }
+  .idol-item .poster-overlay {
+    @apply z-[3];
+  }
+
+  .status-card {
+    @apply bg-white/[0.04] border border-white/[0.08] rounded-xl p-[15px];
+  }
+  .status-card h3 {
+    @apply text-[11px] text-text-muted uppercase tracking-[1px] mb-3 flex items-center gap-2;
+  }
+  .status-card h3 i {
+    @apply text-accent-blue;
+  }
+  .status-game {
+    @apply flex gap-3 items-center mb-[15px];
+  }
+  .status-game:last-child {
+    @apply mb-0;
+  }
+  .status-game img {
+    @apply w-[60px] h-[60px] rounded-md object-cover;
+  }
+  .status-poster {
+    @apply flex gap-3 items-start mb-[15px];
+  }
+  .status-poster:last-child {
+    @apply mb-0;
+  }
+  .status-poster img {
+    @apply w-[60px] h-[80px] rounded-md object-cover;
+  }
+  .status-info {
+    @apply flex flex-col gap-1;
+  }
+  .status-title {
+    @apply text-sm font-semibold text-white;
+  }
+  .status-desc {
+    @apply text-xs text-text-muted;
+  }
+}
+
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

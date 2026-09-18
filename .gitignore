@@ -1,0 +1,22 @@
+# Claude Code
+.claude
+
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+
+# Dependencies
+/node_modules
+
+# Env
+.env*.local
+
+# Vercel
+.vercel
+
+# Misc
+*.tsbuildinfo
+.DS_Store
+
+.vscode
