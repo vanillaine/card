@@ -27,9 +27,6 @@ that updates itself:
 | Ting Tong, ACaslonPro, ITC Avant Garde (self-hosted) | Name, headings, poster labels |
 | [Font Awesome](https://fontawesome.com) (kit) | Nav & social icons |
 
-No database, no UI library, no state library. Everything live is fetched on the server and cached
-(except Discord, which polls from the browser).
-
 ## APIs & credits
 
 A lot of these are **unofficial** (community projects, undocumented endpoints, or plain HTML scraping), so
