@@ -42,7 +42,7 @@ export default function NavShell({ lodestoneUrl }: { lodestoneUrl?: string }) {
       </header>
 
       <nav
-        className={`w-[260px] bg-[rgba(15,13,30,0.45)] backdrop-blur-md border-r border-white/[0.06] p-5 flex flex-col overflow-y-auto scrollbar-hide max-mobile:fixed max-mobile:left-0 max-mobile:top-[60px] max-mobile:h-[calc(100vh-60px)] max-mobile:w-[250px] max-mobile:bg-bg-sidebar max-mobile:z-[999] max-mobile:shadow-[5px_0_15px_rgba(0,0,0,0.5)] max-mobile:transition-transform max-mobile:duration-300 max-mobile:ease-in-out max-mobile:border-r-0 ${
+        className={`w-[260px] bg-[rgba(15,13,30,0.45)] backdrop-blur-md border-r border-white/[0.06] p-5 flex flex-col overflow-y-auto scrollbar-hide max-mobile:fixed max-mobile:left-0 max-mobile:top-[60px] max-mobile:h-[calc(100vh-60px)] max-mobile:w-[250px] max-mobile:bg-bg-sidebar max-mobile:backdrop-blur-none max-mobile:z-[999] max-mobile:shadow-[5px_0_15px_rgba(0,0,0,0.5)] max-mobile:transition-transform max-mobile:duration-300 max-mobile:ease-in-out max-mobile:border-r-0 ${
           open ? "max-mobile:translate-x-0" : "max-mobile:-translate-x-full"
         }`}
       >
