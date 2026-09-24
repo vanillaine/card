@@ -14,6 +14,11 @@ that updates itself:
 | `/games` | Favorites + recently played (from Backloggd) |
 | `/idols` | J-pop & K-pop faves, hover to reveal the photo/video |
 
+The copy on those pages (intro, byf/dni, the little description under each page's header, badges) isn't
+hardcoded — it lives in a database and I edit it at [admin.vanillaine.my.id](https://admin.vanillaine.my.id).
+See [Admin panel](#admin-panel) below. Everything else (the actual anime/film/game/idol entries) still comes
+straight from the APIs.
+
 ## Stack
 
 | What | Used for |
@@ -22,6 +27,8 @@ that updates itself:
 | [React 19](https://react.dev) | UI |
 | [TypeScript](https://www.typescriptlang.org) | Types |
 | [Tailwind CSS v4](https://tailwindcss.com) | Styling, CSS-first config in `app/globals.css` |
+| [Prisma 7](https://www.prisma.io) + [Supabase](https://supabase.com) (Postgres) | Editable content + admin sessions |
+| [Better Auth](https://www.better-auth.com) | Google sign-in for the admin panel |
 | [Vercel](https://vercel.com) | Hosting |
 | [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) via `next/font` | Body font |
 | Ting Tong, ACaslonPro, ITC Avant Garde (self-hosted) | Name, headings, poster labels |
@@ -54,3 +61,56 @@ Other credits:
   artists/labels/agencies). This is a fan page.
 - Small icons: [Simple Icons](https://simpleicons.org) CDN and [SteamGridDB](https://www.steamgriddb.com)
   (the monochrome FFXIV icon is by Peggin).
+
+## Running it locally
+
+```bash
+npm install
+cp .env.example .env.local   # then fill it in
+npm run db:migrate           # creates the tables
+npm run db:seed              # seeds the starting copy
+npm run dev
+```
+
+Open <http://localhost:3000> for the public site. The admin panel is hostname-routed (see below); Google OAuth
+won't authorize a `*.localhost` subdomain origin, so testing it locally needs a second dev server on a
+different port instead: `npm run dev:admin`, then open <http://localhost:3001>. Other scripts: `npm run build`,
+`npm start`, `npm run typecheck`.
+
+## Admin panel
+
+`admin.vanillaine.my.id` is the same Next.js app as the public site, deployed once, on the same Vercel
+project — [proxy.ts](proxy.ts) looks at the request's `Host` header and serves the admin routes only there.
+Visiting an admin path (`/dashboard`, `/pages`, `/login`) on the public domain just 301s over to the admin one.
+
+Login is Google OAuth via Better Auth. There's no invite/whitelist table — signing in works for anyone with a
+Google account, but [`requireAdmin()`](lib/admin/require-admin.ts) only grants edit access when the signed-in
+email matches `OWNER_EMAIL`. Anyone else just gets bounced, with an inert, capability-less account row left
+behind.
+
+What's editable:
+
+| Screen | Editable | Rules |
+| --- | --- | --- |
+| `/dashboard` — Badges | The badges next to "age" (pronouns, MBTI, language, ...) | `age` itself isn't here — it's always computed from my birthdate |
+| `/dashboard` — Sections | Homepage sections (introduction, seasonals, ...) | `introduction` can't be deleted (its content still can be edited); add/reorder/remove the rest freely |
+| `/dashboard` — byf / dni | The bullet points under each | At least one bullet per list always has to stay |
+| `/pages` | The one description paragraph under each page's header (`ani-manga`, `films`, `books`, `games`, `j-pop`, `k-pop`) | Fixed set, edit-only — the page layouts wire these slots in directly |
+
+Any of those text fields accepts a tiny markdown subset — see [components/RichText.tsx](components/RichText.tsx):
+`**bold**`, `_italic_`, `***bold italic***`, `[text](url)`. No nesting, nothing block-level (no headers/lists
+inside a field).
+
+An edit shows up on the public site right away: every admin Server Action calls `revalidateTag` on the way
+out, so the next request to the public page picks it up — no redeploy needed.
+
+### One-time setup for a fresh environment
+
+1. **Supabase** — new project, then Project Settings → Database → Connect for the pooled (`DATABASE_URL`)
+   and direct (`DIRECT_URL`) connection strings.
+2. **Google OAuth** — Google Cloud Console → APIs & Services → Credentials → OAuth client ID (Web
+   application). Authorized redirect URI: `<BETTER_AUTH_URL>/api/auth/callback/google`.
+3. **DNS + Vercel** — add an `admin` subdomain record at the registrar pointing at Vercel (same as the apex),
+   then add `admin.vanillaine.my.id` as a second domain on the same Vercel project.
+4. Fill in the rest of `.env.example`'s admin section (`BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`,
+   `NEXT_PUBLIC_ADMIN_HOST`, `OWNER_EMAIL`) and set the same variables in Vercel.

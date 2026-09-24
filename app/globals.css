@@ -71,7 +71,7 @@
   }
 
   body {
-    @apply flex h-screen overflow-hidden text-text-main font-jakarta scrollbar-hide;
+    @apply text-text-main font-jakarta;
     background: linear-gradient(154deg, #102535 0%, #13102a 50%, #1c0d24 100%);
   }
 
@@ -243,6 +243,43 @@
   }
   .status-desc {
     @apply text-xs text-text-muted;
+  }
+
+  .admin-shell {
+    @apply max-w-3xl mx-auto p-6 flex flex-col gap-6 max-mobile:p-4;
+  }
+  .admin-card {
+    @apply bg-white/[0.04] border border-white/[0.08] rounded-xl p-5 flex flex-col gap-3;
+  }
+  .admin-card h2 {
+    @apply text-base font-semibold text-white;
+  }
+  .admin-hint {
+    @apply text-xs text-text-muted -mt-2;
+  }
+  .admin-row {
+    @apply flex items-center gap-2 flex-wrap;
+  }
+  .admin-input,
+  .admin-textarea {
+    @apply bg-bg-main border border-line rounded-md px-2.5 py-1.5 text-sm text-text-main outline-none focus:border-accent-blue;
+  }
+  .admin-textarea {
+    @apply w-full resize-y;
+  }
+  .admin-btn,
+  .admin-btn-primary,
+  .admin-btn-danger {
+    @apply border rounded-md px-3 py-1.5 text-sm cursor-pointer transition-colors disabled:opacity-30 disabled:pointer-events-none;
+  }
+  .admin-btn {
+    @apply border-line text-text-muted hover:bg-hover hover:text-white;
+  }
+  .admin-btn-primary {
+    @apply border-accent-blue text-accent-blue hover:bg-accent-blue/10;
+  }
+  .admin-btn-danger {
+    @apply border-line text-text-muted hover:bg-red-500/10 hover:text-red-400;
   }
 }
 

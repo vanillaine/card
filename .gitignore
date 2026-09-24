@@ -5,9 +5,16 @@
 /.next/
 /out/
 next-env.d.ts
+# next dev recreates these AI-agent instruction files locally if missing —
+# gitignored on purpose, not tracked
+/AGENTS.md
+/CLAUDE.md
 
 # Dependencies
 /node_modules
+
+# Prisma generated client
+/generated
 
 # Env
 .env*.local

@@ -2,8 +2,9 @@
 
 import { ProfileHeader, CurrentlyPlayingCard } from "./DiscordStatus";
 import { useDiscordStatus } from "./useDiscordStatus";
+import type { BadgeItem } from "@/lib/content";
 
-export default function HomeHeader({ age }: { age: number }) {
+export default function HomeHeader({ age, badges }: { age: number; badges: BadgeItem[] }) {
   const data = useDiscordStatus();
 
   return (
@@ -14,15 +15,11 @@ export default function HomeHeader({ age }: { age: number }) {
         <div>
           <span className="badge">age</span> {age}
         </div>
-        <div>
-          <span className="badge">pronouns</span> any
-        </div>
-        <div>
-          <span className="badge">MBTI</span> INFP-T
-        </div>
-        <div>
-          <span className="badge">language</span> ENG/ID
-        </div>
+        {badges.map((badge) => (
+          <div key={badge.id}>
+            <span className="badge">{badge.label}</span> {badge.value}
+          </div>
+        ))}
       </div>
 
       <CurrentlyPlayingCard data={data} />

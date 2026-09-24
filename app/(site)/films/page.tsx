@@ -1,10 +1,11 @@
 import PosterGrid from "@/components/PosterGrid";
-import { Accent, ExternalLink } from "@/components/Prose";
+import { RichText } from "@/components/RichText";
 import { fetchFilmPosters } from "@/lib/tmdb";
 import { bookPicks } from "@/data/curated";
+import { getPageDescriptions } from "@/lib/content";
 
 export default async function FilmsPage() {
-  const films = await fetchFilmPosters();
+  const [films, descriptions] = await Promise.all([fetchFilmPosters(), getPageDescriptions("films")]);
 
   const filmItems = films.map((f) => ({
     title: f.title,
@@ -23,16 +24,15 @@ export default async function FilmsPage() {
       <h1 className="section-name">Films & Books</h1>
       <div className="media-category">
         <p>
-          <span className="badge">films</span>Started <Accent italic>really actually</Accent> watching films in 2020.
-          Honestly kinda burnt out of films as of late. Go check out my{" "}
-          <ExternalLink href="https://letterboxd.com/Vanillaine/">Letterboxd</ExternalLink>!
+          <span className="badge">films</span>
+          <RichText text={descriptions.films} />
         </p>
         <PosterGrid items={filmItems} />
       </div>
       <div className="media-category">
         <p>
-          <span className="badge">books</span>Started reading actual books/novels in 2025, so my reads are still a
-          tad bit few. I don&apos;t have a social book logging app because I&apos;m using Bookmory.
+          <span className="badge">books</span>
+          <RichText text={descriptions.books} />
         </p>
         <PosterGrid items={bookItems} />
       </div>

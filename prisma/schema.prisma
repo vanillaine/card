@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email         String   @unique
+  name          String
+  emailVerified Boolean  @default(false) @map("email_verified")
+  image         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+
+  sessions Session[]
+  accounts Account[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @updatedAt @map("updated_at")
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  identifier String
+  value      String
+  expiresAt  DateTime  @map("expires_at")
+  createdAt  DateTime? @default(now()) @map("created_at")
+  updatedAt  DateTime? @default(now()) @updatedAt @map("updated_at")
+
+  @@map("verification")
+}
+
+// Homepage badge row (age is computed from birthDate and never stored here).
+model Badge {
+  id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  label String
+  value String
+  order Int
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("badges")
+}
+
+// Homepage section (introduction, seasonals, ...). Exactly one row has
+// required = true (introduction); the app refuses to delete it.
+model Section {
+  id       String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  label    String
+  body     String
+  order    Int
+  required Boolean @default(false)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("sections")
+}
+
+enum PointerType {
+  byf
+  dni
+}
+
+// A byf/dni bullet. The app refuses to delete the last row of a given type.
+model Pointer {
+  id    String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type  PointerType
+  body  String
+  order Int
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("pointers")
+}
+
+// Fixed description slots on the other pages (ani-manga, films, books,
+// games, j-pop, k-pop). Rows are seeded once; the app only lets these be
+// edited, never added or removed — the slots are wired into the pages.
+model PageDescription {
+  id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  page  String
+  slug  String @unique
+  body  String
+
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("page_descriptions")
+}
