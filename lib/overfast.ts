@@ -5,6 +5,8 @@ export type OverwatchSummary = {
   rankLabel: string;
 };
 
+const QUEUE_LABEL = "Open Queue";
+
 export async function fetchOverwatchSummary(): Promise<OverwatchSummary> {
   try {
     const res = await fetch(`https://overfast-api.tekrop.fr/players/${overwatch.playerId}`, {
@@ -14,17 +16,15 @@ export async function fetchOverwatchSummary(): Promise<OverwatchSummary> {
 
     const data = await res.json();
     const username = data.summary?.username || overwatch.name;
-    const support = data.summary?.competitive?.pc?.support;
+    const open = data.summary?.competitive?.pc?.open;
 
-    if (!support) return { username, rankLabel: "Support - Unranked" };
+    if (!open) return { username, rankLabel: `${QUEUE_LABEL} - Unranked` };
 
-    const division = support.division
-      ? support.division.charAt(0).toUpperCase() + support.division.slice(1)
-      : "Unranked";
-    const tier = support.tier ?? "";
+    const division = open.division ? open.division.charAt(0).toUpperCase() + open.division.slice(1) : "Unranked";
+    const tier = open.tier ?? "";
 
-    return { username, rankLabel: `Support - ${division} ${tier}`.trim() };
+    return { username, rankLabel: `${QUEUE_LABEL} - ${division} ${tier}`.trim() };
   } catch {
-    return { username: overwatch.name, rankLabel: "Support - Unknown" };
+    return { username: overwatch.name, rankLabel: `${QUEUE_LABEL} - Unknown` };
   }
 }
